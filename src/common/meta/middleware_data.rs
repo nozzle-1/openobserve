@@ -103,8 +103,8 @@ impl RumExtraData {
             let ip_address = match headers.contains_key("X-Forwarded-For")
                 || headers.contains_key("Forwarded")
             {
-                true => conn_info.realip_remote_addr().unwrap(),
-                false => conn_info.peer_addr().unwrap(),
+                true => conn_info.realip_remote_addr().unwrap_or_default(),
+                false => conn_info.peer_addr().unwrap_or_default(),
             };
 
             user_agent_hashmap.insert("ip".into(), ip_address.into());
